@@ -52,18 +52,18 @@
 					
 					<!-- Text input-->
 					<div class="form-group" id="form-group-teamid">
-						<label class="col-md-4 control-label" for="textinput">Team-ID</label>  
+						<label class="col-md-4 control-label" for="textinput-teamid">Team-ID</label>  
 						<div class="col-md-4">
-							<input id="textinput" name="teamid" type="text" placeholder="TEAM-ID" class="form-control input-md" required="" oninput="validateTeamID(this)">
+							<input id="textinput-teamid" name="teamid" type="text" placeholder="TEAM-ID" class="form-control input-md" required="" oninput="validateTeamID(this)">
 							<div class="invalid-feedback" id="invalid-feedback-team">Bitte eine gültige Team-ID eintragen.</div>
 						</div>
 					</div>
 					
 					<!-- Text input-->
 					<div class="form-group" id="form-group-stationid">
-						<label class="col-md-4 control-label" for="textinput">Station-ID</label>  
+						<label class="col-md-4 control-label" for="textinput-station">Station-ID</label>  
 						<div class="col-md-4">
-							<input id="textinput" name="station" type="text" placeholder="STATION-ID" class="form-control input-md" required="" oninput="validateStationID(this)">
+							<input id="textinput-station" name="station" type="text" placeholder="STATION-ID" class="form-control input-md" required="" oninput="validateStationID(this)">
 							<div class="invalid-feedback" id="invalid-feedback-station">Bitte eine gültige Station-ID eintragen.</div>
 						</div>
 					</div>
@@ -72,7 +72,7 @@
 					<div class="form-group">
 						<label class="col-md-4 control-label" for=""></label>
 						<div class="col-md-4">
-							<button id="" name="" class="btn btn-primary" onclick="showStations()">Los geht's</button>
+							<button id="" name="" class="btn btn-primary">Los geht's</button>
 						</div>
 					</div>
 					
@@ -80,11 +80,17 @@
 			</form>
 		</div>
 		<div class="jumbotron jumbotron-fluid">
-			<div class="container">
-				<button id="" name="" class="btn btn-primary" onclick="testParse()">Check</button>
+			<div class="container" id="stationContainer">
 				<p class="lead" id="stationText"></p>
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="next-station"></label>
+					<div class="col-md-4">
+						<button id="next-station" name="next-station" class="btn btn-success" onclick="testParse()">Nächste Station</button>
+					</div>
+				</div>
 			</div>
 		</div>
+		<!-- <button id="" name="" class="btn btn-primary" onclick="testParse()">Check</button> -->
 	</div>
 
 
