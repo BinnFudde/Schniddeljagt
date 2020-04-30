@@ -1,3 +1,26 @@
+window.onload = function checkParas() {
+    var allSet = false;
+    if (getTeamId() == 0) {
+        console.log('No Team ID found')
+    } else {
+        console.log('Team ID found ' + getTeamId())
+        document.getElementById("form-group-teamid").style.display = "none";
+        allSet = true;
+    }
+
+    if (getStationId() == 0) {
+        console.log('No Station ID found')
+        allSet = false;
+    } else {
+        console.log('Station ID found ' + getStationId())
+        document.getElementById("form-group-stationid").style.display ="none";
+    }
+
+    if (allSet) {
+        document.getElementById("welcome-group").style.display ="none";
+    }
+}
+
 function getStationId() {
     let urlParams = new URLSearchParams(window.location.search);
     let station = urlParams.get('station');
@@ -100,30 +123,6 @@ function showStations() {
     }
     document.getElementById("stationText").innerHTML = stationString;
 }
-
-window.onload = function checkParas() {
-    var allSet = false;
-    if (getTeamId() == 0) {
-        console.log('No Team ID found')
-    } else {
-        console.log('Team ID found ' + getTeamId())
-        document.getElementById("form-group-teamid").style.display = "none";
-        allSet = true;
-    }
-
-    if (getStationId() == 0) {
-        console.log('No Station ID found')
-        allSet = false;
-    } else {
-        console.log('Station ID found ' + getStationId())
-        document.getElementById("form-group-stationid").style.display ="none";
-    }
-
-    if (allSet) {
-        document.getElementById("welcome-group").style.display ="none";
-    }
-}
-
 function testParse() {
     document.getElementById("stationText").innerHTML = getStationTask(getStationId());
     // console.log(team_json);
