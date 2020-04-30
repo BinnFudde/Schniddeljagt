@@ -18,3 +18,13 @@ body{
 .navbar-inverse .navbar-brand {
 	color: white;
 }
+
+#invalid-feedback {
+	color: #c71630;
+	display: none;
+}
+
+#osmap {
+	height: 900px;
+	width: 100%;
+}
