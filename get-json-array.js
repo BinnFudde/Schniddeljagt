@@ -6,9 +6,18 @@ $(document).ready(function(){
         .done(function(rows){
             // each row is a row of data from the spreadsheet
             // console.log(rows);
-            entry = rows;
+            team_json = rows;
         })
         .fail(function(err){
             console.log('error!', err);
         });
+        $.googleSheetToJSON(SPREADSHEET_ID,2)
+        .done(function(rows){
+            // each row is a row of data from the spreadsheet
+            // console.log(rows);
+            station_json = rows;
+        })
+        .fail(function(err){
+            console.log('error!', err);
+        });        
 });

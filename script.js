@@ -1,69 +1,90 @@
-function setUrlPara(teamID) {
-    let urlParams = new URLSearchParams(window.location.search);
-    urlParams.set('teamid', teamID);
-    window.history.replaceState({}, '', `${location.pathname}?${urlParams}`);
-}
-
 function getStationId() {
     let urlParams = new URLSearchParams(window.location.search);
     let station = urlParams.get('station');
     if (station == null) {
         station = 0;
+    } else {
+        station = station.toUpperCase();
     }
     return(station);
 }
 
 function getTeamId() {
     let urlParams = new URLSearchParams(window.location.search);
-    const teamID = urlParams.get('teamid');
+    let teamID = urlParams.get('teamid');
+    if (teamID == null) {
+        teamID = 0;
+    } else {
+        teamID = teamID.toUpperCase();
+    }
     return(teamID);
 }
 
-function validateTeamID() {
-    const teamID = getTeamId();
+function validateTeamID(input) {
+    const teamID = input.value.toUpperCase();
     // Validate ID
     var TeamIdValid = false;
-    for (var i=0 ; i < entry.length ; i++)
+    for (var i=0 ; i < team_json.length ; i++)
     {
-        if (entry[i].teamid == teamID) {
+        if (team_json[i].teamid == teamID) {
             var TeamIdValid = true;
         }
     }
     if (TeamIdValid) {
-        console.log("valid Team ID");
-        return(true);
+        console.log("valid Team ID " + teamID);
+        input.setCustomValidity('');
     } else {
-        console.log("invalid Team ID");
+        console.log("invalid Team ID " + teamID);
+        input.setCustomValidity('"' + input.value + '" ist keine gültige Team-ID.');
         return(false);
     }
 }
 
-function submitTeamID() {
-    setUrlPara(document.getElementById("tIDinput").value);
-    if (validateTeamID()) {
-        document.getElementById("stationText").innerHTML = getStationTask(getStationId());
-        document.getElementById("invalid-feedback").style.display = "none";
-    } else {
-        document.getElementById("invalid-feedback").style.display = "block";
+function validateStationID(input) {
+    const stationID = input.value.toUpperCase();
+    // Validate ID
+    var StationIDValid = false;
+    for (var i=0 ; i < station_json.length ; i++)
+    {
+        if (station_json[i].stationid == stationID) {
+            var StationIDValid = true;
+        }
     }
-
+    if (StationIDValid) {
+        console.log("valid Station ID " + stationID);
+        input.setCustomValidity('');
+    } else {
+        console.log("invalid Station ID " + stationID);
+        input.setCustomValidity('"' + input.value + '" ist keine gültige Station-ID.');
+    }
 }
 
 function getStationTask(stationID) {
     let stations = getStations();
+    let stationNo = 0;
     let stationString = '';
-    
-    stationString = stationString + '<h2>Station ' + stationID + '</h2><p>' + stations[stationID] + '</p>'
+
+    for (var i=0 ; i < station_json.length ; i++)
+    {
+        if (station_json[i].stationid == stationID) {
+            stationNo = i;
+        }
+    }
+    stationString = '<h2>Station ' + stationNo + ' - ' + station_json[stationNo].name + '</h2><p>' + stations[stationNo] + '</p>'
     return(stationString);
 }
 
 function getStations() {
     const teamID = getTeamId();
+    let stationsFirst = [];
+    let stationsSecond = [];
     let stations = [];
-    for (var i=0 ; i < entry.length ; i++)
+    for (var i=0 ; i < team_json.length ; i++)
     {
-        if (entry[i].teamid == teamID) {
-            stations = entry[i].station;
+        if (team_json[i].teamid == teamID) {
+            stationsFirst = team_json[i].station;
+            stationsSecond = team_json[i].station1;
+            stations = stationsFirst.concat(stationsSecond);
         }
     }
     console.log(stations);
@@ -75,13 +96,37 @@ function showStations() {
     let stationString = '';
     for (var i=0 ; i < stations.length ; i++)
     {
-        stationString = stationString + '<h2>Station ' + (i + 1) + '</h2><p>' + stations[i] + '</p>'
+        stationString = stationString + '<h2>Station ' + (i + 1) + '</h2><p>' + stations[i] + '</p>';
     }
     document.getElementById("stationText").innerHTML = stationString;
 }
 
+window.onload = function checkParas() {
+    var allSet = false;
+    if (getTeamId() == 0) {
+        console.log('No Team ID found')
+    } else {
+        console.log('Team ID found ' + getTeamId())
+        document.getElementById("form-group-teamid").style.display = "none";
+        allSet = true;
+    }
 
-function testParse() {
-    showStations();
+    if (getStationId() == 0) {
+        console.log('No Station ID found')
+        allSet = false;
+    } else {
+        console.log('Station ID found ' + getStationId())
+        document.getElementById("form-group-stationid").style.display ="none";
+    }
+
+    if (allSet) {
+        document.getElementById("welcome-group").style.display ="none";
+    }
 }
 
+function testParse() {
+    document.getElementById("stationText").innerHTML = getStationTask(getStationId());
+    // console.log(team_json);
+    // console.log(station_json);
+    // getStations();
+}
