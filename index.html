@@ -42,28 +42,55 @@
 	</nav>
 
 	<div class="container">
-		<div class="jumbotron">
+		<div class="jumbotron" id="welcome-group">
 			<h1><i class="fab fa-untappd"></i> Schniddeljagt</h1>
-			<p>Bitte tragt Eure Team-ID ein:</p>
-			<form>
-				<div class="row">
-					<div class="col-sm-6">
-						<input type="text" class="form-control" id="tIDinput" placeholder="TEAM-ID" required>
-						<div id="invalid-feedback">
-							Bitte eine gültige Team-ID eintragen.
+			<form class="form-horizontal">
+				<fieldset>
+					
+					<!-- Form Name -->
+					<legend>Bitte tragt Eure Team-ID und Station-ID ein:</legend>
+					
+					<!-- Text input-->
+					<div class="form-group" id="form-group-teamid">
+						<label class="col-md-4 control-label" for="textinput-teamid">Team-ID</label>  
+						<div class="col-md-4">
+							<input id="textinput-teamid" name="teamid" type="text" placeholder="TEAM-ID" class="form-control input-md" required="" oninput="validateTeamID(this)">
+							<div class="invalid-feedback" id="invalid-feedback-team">Bitte eine gültige Team-ID eintragen.</div>
 						</div>
 					</div>
-					<div class="col-sm-6">
-						<button type="button" class="btn btn-primary" onclick="submitTeamID()">Los geht's</button>
+					
+					<!-- Text input-->
+					<div class="form-group" id="form-group-stationid">
+						<label class="col-md-4 control-label" for="textinput-station">Station-ID</label>  
+						<div class="col-md-4">
+							<input id="textinput-station" name="station" type="text" placeholder="STATION-ID" class="form-control input-md" required="" oninput="validateStationID(this)">
+							<div class="invalid-feedback" id="invalid-feedback-station">Bitte eine gültige Station-ID eintragen.</div>
+						</div>
 					</div>
-				</div>
+					
+					<!-- Button -->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for=""></label>
+						<div class="col-md-4">
+							<button id="" name="" class="btn btn-primary">Los geht's</button>
+						</div>
+					</div>
+					
+				</fieldset>
 			</form>
 		</div>
 		<div class="jumbotron jumbotron-fluid">
-			<div class="container">
-			  <p class="lead" id="stationText"></p>
+			<div class="container" id="stationContainer">
+				<p class="lead" id="stationText"></p>
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="next-station"></label>
+					<div class="col-md-4">
+						<button id="next-station" name="next-station" class="btn btn-success" onclick="testParse()">Nächste Station</button>
+					</div>
+				</div>
 			</div>
 		</div>
+		<!-- <button id="" name="" class="btn btn-primary" onclick="testParse()">Check</button> -->
 	</div>
 
 
@@ -71,9 +98,10 @@
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<!-- Credits to Tom Leen of Confluent Forms https://github.com/confluentforms/jquery-google-sheet-to-json -->
-	<script src="jquery-google-sheet-to-json.min.js"></script>	
-	<script type='text/javascript' > 
-		var entry; 
+	<script src="jquery-google-sheet-to-json.min.js"></script>
+	<script type='text/javascript' >
+		var team_json; 
+		var station_json;
 	</script>
 	<script src="get-json-array.js"></script>
 	<script src="script.js"></script>

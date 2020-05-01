@@ -19,8 +19,12 @@ body{
 	color: white;
 }
 
-#invalid-feedback {
+.invalid-feedback {
 	color: #c71630;
+	display: none;
+}
+
+#stationContainer {
 	display: none;
 }
 
