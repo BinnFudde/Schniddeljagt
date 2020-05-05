@@ -21,7 +21,9 @@ window.onload = function checkParas() {
     if (allSet) {
         document.getElementById("welcome-group").style.display ="none";
         document.getElementById("stationContainer").style.display ="block";
-        document.getElementById("stationText").innerHTML = getStationTask(getStationId());
+        let stationInfo = getStationTask(getStationId());
+        document.getElementById("stationTitle").innerHTML = (stationInfo[1]);
+        document.getElementById("stationText").innerHTML = (stationInfo[2]);
     }
 }
 
@@ -89,7 +91,6 @@ function validateStationID(input) {
 function getStationTask(stationID) {
     let stations = getStations();
     let stationNo = 0;
-    let stationString = '';
 
     for (var i=0 ; i < station_json.length ; i++)
     {
@@ -97,8 +98,10 @@ function getStationTask(stationID) {
             stationNo = i;
         }
     }
-    stationString = '<h2>Station ' + stationNo + ' - ' + station_json[stationNo].name + '</h2><p>' + stations[stationNo] + '</p>'
-    return(stationString);
+    let stationTitle = station_json[stationNo].name;
+    let stationTask = stations[stationNo];
+    let stationArr = [stationNo,stationTitle,stationTask];
+    return(stationArr);
 }
 
 function getStations() {
