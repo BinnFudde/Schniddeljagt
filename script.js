@@ -1,27 +1,42 @@
 window.onload = function checkParas() {
     var allSet = false;
+    const teamId = getTeamId();
+    const stationId = getStationId();
+    var inputLegend = document.getElementById("input-legend");
+
+    inputLegend.innerHTML = "Bitte tragt Eure";
+
     if (getTeamId() == 0) {
-        console.log('No Team ID found')
+        console.log('No Team ID found');
+        inputLegend.innerHTML = inputLegend.innerHTML + " Team-ID";
     } else {
-        console.log('Team ID found ' + getTeamId())
+        console.log('Team ID found ' + teamId)
         document.getElementById("form-group-teamid").style.display = "none";
-        document.getElementById("textinput-teamid").value = getTeamId();
+        document.getElementById("textinput-teamid").value = teamId;
+        document.getElementById("welcome-team").innerHTML = "Wilkommen " + getTeamName();
         allSet = true;
     }
 
     if (getStationId() == 0) {
         console.log('No Station ID found')
+        if (allSet) {
+            inputLegend.innerHTML = inputLegend.innerHTML + " Station-ID";
+        } else {
+            inputLegend.innerHTML = inputLegend.innerHTML + " und Station-ID";
+        }
         allSet = false;
     } else {
-        console.log('Station ID found ' + getStationId())
+        console.log('Station ID found ' + stationId)
         document.getElementById("form-group-stationid").style.display ="none";
-        document.getElementById("textinput-station").value = getStationId();
+        document.getElementById("textinput-station").value = stationId;
     }
+
+    inputLegend.innerHTML = inputLegend.innerHTML + " ein:";
 
     if (allSet) {
         document.getElementById("welcome-group").style.display ="none";
         document.getElementById("stationContainer").style.display ="block";
-        let stationInfo = getStationTask(getStationId());
+        let stationInfo = getStationTask(stationId);
         document.getElementById("stationTitle").innerHTML = (stationInfo[1]);
         document.getElementById("stationText").innerHTML = (stationInfo[2]);
     }
@@ -47,6 +62,16 @@ function getTeamId() {
         teamID = teamID.toUpperCase();
     }
     return(teamID);
+}
+
+function getTeamName() {
+    const teamID = getTeamId();
+    for (var i=0 ; i < team_json.length ; i++)
+    {
+        if (team_json[i].teamid == teamID) {
+            return(team_json[i].teamname);
+        }
+    }
 }
 
 function validateTeamID(input) {
