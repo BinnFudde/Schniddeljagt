@@ -48,6 +48,15 @@ body {
   background-color: #f5f5f5;
 }
 
+.badge {
+  font-size: 150%;
+}
+
+.blurry-text {
+  color: transparent;
+  text-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
 #stationContainer {
 	display: none;
 }
