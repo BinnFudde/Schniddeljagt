@@ -17,7 +17,6 @@ var team_json = [];
 
 window.onload = function intFunction() {
     let teamArray = shuffle(getTeamNames());
-    console.log(teamArray);
     document.getElementById('rank-list').appendChild(makeUL(teamArray));
 }
 
@@ -31,9 +30,7 @@ function makeUL(array) {
     // const blurArray = getRandomBlur();
     // console.log(blurArray);
 
-    for (var i = 1; i < array.length; i++) {
-        // Start at 1 because first entry is only for testing
-        
+    for (var i = 0; i < array.length; i++) {        
         // Create the list item:
         var item = document.createElement('li');
         // Set its contents:
@@ -45,7 +42,7 @@ function makeUL(array) {
         item.classList.add("align-items-center");
         
         // Static Blur - first 3 entrys
-        if (i <= 3) {
+        if (i <= 2) {
             item.classList.add("blurry-text");
         }
 
@@ -60,7 +57,7 @@ function makeUL(array) {
         // Create the list item badges:
         var itemBadge = document.createElement('span');
         // Set its contents:
-        itemBadge.appendChild(document.createTextNode(i));
+        itemBadge.appendChild(document.createTextNode(i+1));
         // Set its classes
         itemBadge.classList.add("badge");
         itemBadge.classList.add("badge-secondary");
@@ -105,9 +102,15 @@ function getRandomBlur() {
 
 function getTeamNames() {
     let teamNames = [];
-    for (var i=0 ; i < team_json.length ; i++)
+    
+    if (team_json.length <1) {
+        console.log('team_json undefined')
+        return;
+    }
+
+    for (var i=1 ; i < team_json.length ; i++)
     {
-        teamNames[i] = team_json[i].teamname
+        teamNames[i-1] = team_json[i].teamname
     }
     return(teamNames);
 }
