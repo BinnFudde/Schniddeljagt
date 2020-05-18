@@ -14,6 +14,7 @@ window.onload = function checkParas() {
         document.getElementById("form-group-teamid").style.display = "none";
         document.getElementById("textinput-teamid").value = teamId;
         document.getElementById("welcome-team").innerHTML = "Wilkommen " + getTeamName();
+        document.getElementById("sign-out").style.display = "block";
         allSet = true;
     }
 
@@ -80,7 +81,6 @@ function getTeamIdCookie() {
     var teamID;
     if (document.cookie) {
         teamID = getCookie("teamID");
-        console.log(teamID);
     }
     if (teamID == null) {
         teamID = 0;
@@ -113,7 +113,7 @@ function validateTeamID(input) {
     }
     if (TeamIdValid) {
         console.log("valid Team ID " + teamID);
-        setCookie("teamID",teamID,7);
+        setCookie("teamID",teamID,1);
         input.setCustomValidity('');
     } else {
         console.log("invalid Team ID " + teamID);
@@ -209,6 +209,14 @@ function resetStation() {
     let urlParams = new URLSearchParams(window.location.search);
     urlParams.set('station', 0);
     window.history.replaceState({}, '', `${location.pathname}?${urlParams}`);
+    location.reload();
+}
+
+function resetTeam() {
+    let urlParams = new URLSearchParams(window.location.search);
+    urlParams.set('teamid', 0);
+    window.history.replaceState({}, '', `${location.pathname}?${urlParams}`);
+    setCookie("teamID","0",1);
     location.reload();
 }
 
