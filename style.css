@@ -78,6 +78,12 @@ hr {
   margin: 18px 0;
 }
 
+@media (min-width: 768px) {
+  .nav-item > .btn {
+    padding: 0.375rem 1.625rem;
+  }
+}
+
 #stationContainer {
 	display: none;
 }
