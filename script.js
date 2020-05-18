@@ -4,7 +4,7 @@ window.onload = function checkParas() {
     const stationId = getStationId();
     var inputLegend = document.getElementById("input-legend");
 
-    inputLegend.innerHTML = "Bitte tragt Eure";    
+    inputLegend.innerHTML = "Bitte tragt Eure";
 
     if (teamId == 0) {
         console.log('No Team ID found');
@@ -60,8 +60,6 @@ function getTeamId() {
         teamID = getTeamIdCookie();
         if (teamID == null) {
             teamID = 0;
-        } else {
-            setValueUrlParam("teamid",teamID);
         }
     } else {
         teamID = teamID.toUpperCase();
