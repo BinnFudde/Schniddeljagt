@@ -4,9 +4,9 @@ window.onload = function checkParas() {
     const stationId = getStationId();
     var inputLegend = document.getElementById("input-legend");
 
-    inputLegend.innerHTML = "Bitte tragt Eure";
+    inputLegend.innerHTML = "Bitte tragt Eure";    
 
-    if (getTeamId() == 0) {
+    if (teamId == 0) {
         console.log('No Team ID found');
         inputLegend.innerHTML = inputLegend.innerHTML + " Team-ID";
     } else {
@@ -54,14 +54,42 @@ function getStationId() {
 }
 
 function getTeamId() {
-    let urlParams = new URLSearchParams(window.location.search);
-    let teamID = urlParams.get('teamid');
-    if (teamID == null) {
-        teamID = 0;
+    var teamID = getTeamIdURL();
+
+    if (teamID == 0) {
+        teamID = getTeamIdCookie();
+        if (teamID == null) {
+            teamID = 0;
+        } else {
+            setValueUrlParam("teamid",teamID);
+        }
     } else {
         teamID = teamID.toUpperCase();
     }
     return(teamID);
+}
+
+function getTeamIdURL() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var teamID = urlParams.get('teamid');
+    if (teamID == null) {
+        teamID = 0;
+    }
+    return(teamID);
+}
+
+function getTeamIdCookie() {
+    var teamID;
+    if (document.cookie) {
+        teamID = getCookie("teamID");
+        console.log(teamID);
+    }
+    if (teamID == null) {
+        teamID = 0;
+    } else if (!justValidateTeamID(teamID)) {
+        teamID = 0;
+    }
+    return (teamID);
 }
 
 function getTeamName() {
@@ -81,11 +109,13 @@ function validateTeamID(input) {
     for (var i=0 ; i < team_json.length ; i++)
     {
         if (team_json[i].teamid == teamID) {
-            var TeamIdValid = true;
+            TeamIdValid = true;
+            break;
         }
     }
     if (TeamIdValid) {
         console.log("valid Team ID " + teamID);
+        setCookie("teamID",teamID,7);
         input.setCustomValidity('');
     } else {
         console.log("invalid Team ID " + teamID);
@@ -101,7 +131,8 @@ function validateStationID(input) {
     for (var i=0 ; i < station_json.length ; i++)
     {
         if (station_json[i].stationid == stationID) {
-            var StationIDValid = true;
+            StationIDValid = true;
+            break;
         }
     }
     if (StationIDValid) {
@@ -154,13 +185,55 @@ function showStations() {
     }
     document.getElementById("stationText").innerHTML = stationString;
 }
-function testParse() {
+
+function setValueUrlParam (Identifier, Value) {
+    let urlParams = new URLSearchParams(window.location.search);
+    urlParams.set(Identifier, Value);
+    window.history.replaceState({}, '', `${location.pathname}?${urlParams}`);
+    location.reload();
+}
+
+function justValidateTeamID(input) {
+    const teamID = input.toUpperCase();
+    // Validate ID
+    var TeamIdValid = false;
+    for (var i=0 ; i < team_json.length ; i++)
+    {
+        if (team_json[i].teamid == teamID) {
+            TeamIdValid = true;
+            break;
+        }
+    }
+    return(TeamIdValid);
+}
+
+function resetStation() {
     let urlParams = new URLSearchParams(window.location.search);
     urlParams.set('station', 0);
     window.history.replaceState({}, '', `${location.pathname}?${urlParams}`);
     location.reload();
-    // document.getElementById("stationText").innerHTML = getStationTask(getStationId());
-    // console.log(team_json);
-    // console.log(station_json);
-    // getStations();
+}
+
+// Cookie functions from w3schools
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) === ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) === 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
 }

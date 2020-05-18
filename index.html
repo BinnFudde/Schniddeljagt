@@ -97,9 +97,11 @@
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col col-md-8 text-center">
-					<h1 id="stationTitle">Das blaue Wunder</h1>
+					<h1 id="stationTitle">Station Titel</h1>
+					<hr>
+					<h3>Aufgabe:</h3>
 					<p class="lead" id="stationText"></p>
-					<button id="next-station" name="next-station" class="btn btn-success" onclick="testParse()">Nächste Station</button>
+					<button id="next-station" name="next-station" class="btn btn-danger" onclick="resetStation()">Eingabe neue ID</button>
 				</div>
 			</div>
 		</div>
@@ -113,10 +115,22 @@
 		</div>
 	</footer>
 
+	<!-- START Bootstrap-Cookie-Alert -->
+	<div class="alert text-center cookiealert" role="alert">
+		<b>Magst du Kekse?</b> &#x1F36A; Nachdem Du mir Deine Team-ID verrätst, schenke ich Dir einen Keks, damit ich nachher noch weiß, wer Du bist.
+
+		<button type="button" class="btn btn-light btn-sm acceptcookies">
+			Mir doch Egal
+		</button>
+	</div>
+	<!-- END Bootstrap-Cookie-Alert -->	
+
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<!-- Credits to Tom Leen of Confluent Forms https://github.com/confluentforms/jquery-google-sheet-to-json -->
 	<script src="jquery-google-sheet-to-json.min.js"></script>
+	<!-- Credits to Bootstrap Cookie Alert by Wruczek https://github.com/Wruczek/Bootstrap-Cookie-Alert -->
+	<script src="cookiealert.js"></script>
 	<script type='text/javascript' >
 		var team_json; 
 		var station_json;
